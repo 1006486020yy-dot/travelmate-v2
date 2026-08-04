@@ -1,233 +1,200 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f7f8fa">
-<meta name="description" content="旅伴旅行管家 TravelMate V2">
-<title>旅伴旅行管家 · TravelMate V2</title>
+<meta name="theme-color" content="#f5f6f8">
+<meta name="description" content="旅伴旅行管家 TravelMate V2.1">
+<title>旅伴 · TravelMate V2.1</title>
 <style>
-:root{--bg:#f5f6f8;--card:rgba(255,255,255,.78);--text:#16181d;--muted:#7d838d;--line:rgba(20,25,35,.08);--accent:#7b61ff;--accent2:#9a86ff;--shadow:0 18px 45px rgba(35,35,55,.10);--radius:24px}
-*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(180deg,#f8f9fb,#eef0f5);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Helvetica Neue",Arial,sans-serif}
-button,input,textarea,select{font:inherit}button{border:0;cursor:pointer}
-.app{min-height:100vh}.shell{width:min(1120px,100%);margin:auto;padding:18px 18px 110px}
-.glass{background:var(--card);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.7);box-shadow:var(--shadow)}
-.top{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 18px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#f7f8fa 70%,transparent)}
-.brand{display:flex;gap:12px;align-items:center}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#8e78ff,#c0b6ff);display:grid;place-items:center;color:white;font-weight:800;box-shadow:0 8px 22px #8e78ff44}.brand h1{font-size:20px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:2px 0}
-.iconbtn{width:42px;height:42px;border-radius:15px;background:rgba(255,255,255,.72);box-shadow:0 8px 25px #0000000b}
-.page{display:none;animation:page .28s ease}.page.active{display:block}@keyframes page{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.hero{padding:24px;border-radius:32px;overflow:hidden;position:relative;background:linear-gradient(135deg,#242233,#6556a9 55%,#c2b8ff);color:#fff;min-height:220px}
-.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%,#ffffff55,transparent 28%),radial-gradient(circle at 15% 90%,#ffffff20,transparent 25%)}
-.hero>*{position:relative;z-index:1}.eyebrow{font-size:13px;opacity:.8}.hero h2{font-size:30px;line-height:1.18;margin:10px 0}.hero p{max-width:610px;color:#eee;line-height:1.7;margin:0}
-.hero-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}.primary,.secondary{padding:12px 16px;border-radius:15px}.primary{background:#fff;color:#4f3fc0}.secondary{background:#ffffff22;color:#fff;border:1px solid #ffffff40}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}.tile{padding:18px;border-radius:22px;min-height:130px;text-align:left;transition:.2s}.tile:hover{transform:translateY(-2px)}.tile .ico{font-size:27px}.tile b{display:block;margin-top:12px;font-size:16px}.tile span{display:block;color:var(--muted);font-size:12px;margin-top:5px}
-.section{margin-top:22px}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:11px}.section-head h3{margin:0;font-size:19px}.section-head button{background:none;color:var(--accent);font-size:13px}
-.chips{display:flex;gap:8px;overflow:auto;padding-bottom:3px}.chip{white-space:nowrap;padding:9px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);color:#555}.chip.active{background:#181923;color:#fff}
-.trip-card{border-radius:24px;padding:18px}.trip-top{display:flex;justify-content:space-between;gap:10px}.trip-top h3{margin:0;font-size:18px}.badge{padding:6px 9px;border-radius:10px;background:#eeeaff;color:#5b46d6;font-size:11px}.timeline{margin-top:18px}.event{display:grid;grid-template-columns:70px 20px 1fr;gap:8px;min-height:78px}.time{font-size:12px;color:var(--muted);padding-top:2px}.dotline{position:relative}.dotline:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:var(--accent);top:4px;left:4px}.dotline:after{content:"";position:absolute;width:1px;background:#ddd;top:18px;bottom:0;left:9px}.event:last-child .dotline:after{display:none}.event h4{margin:0 0 4px;font-size:14px}.event p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.place{overflow:hidden;border-radius:22px}.place img{width:100%;height:155px;object-fit:cover;display:block}.place-body{padding:14px}.place h4{margin:0 0 5px;font-size:15px}.place p{margin:0;color:var(--muted);font-size:12px;line-height:1.55}.place .row{display:flex;gap:7px;margin-top:11px}.smallbtn{padding:8px 10px;border-radius:11px;background:#f0f1f4;color:#454952;font-size:12px}.smallbtn.primary{background:#eeeaff;color:#5c49d5}
-.search{display:flex;gap:9px;margin:14px 0}.search input{flex:1;border:1px solid var(--line);background:#fff;border-radius:16px;padding:13px 15px;outline:none}
-.ai{border-radius:28px;padding:20px}.ai textarea{width:100%;min-height:150px;resize:vertical;border:1px solid var(--line);border-radius:18px;padding:14px;outline:none;background:#ffffffaa}.ai .bar{display:flex;gap:9px;margin-top:10px}.ai-result{margin-top:14px;padding:15px;border-radius:18px;background:#f3f1ff;line-height:1.7;font-size:13px;white-space:pre-wrap}
-.profile{display:grid;grid-template-columns:150px 1fr;gap:18px}.avatar{height:150px;border-radius:30px;background:linear-gradient(145deg,#292638,#9c8eff);display:grid;place-items:center;color:#fff;font-size:48px}.settings{display:grid;gap:10px}.setting{padding:15px;border-radius:18px;display:flex;justify-content:space-between;align-items:center}.setting span{color:var(--muted);font-size:12px}
-.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;width:min(680px,calc(100% - 24px));z-index:50;padding:8px;border-radius:25px;display:grid;grid-template-columns:repeat(6,1fr);gap:3px}.nav{background:transparent;padding:8px 2px;border-radius:17px;color:#8a8d95;font-size:10px}.nav i{display:block;font-style:normal;font-size:20px;margin-bottom:3px}.nav.active{background:#191923;color:#fff}
-.modal{position:fixed;inset:0;background:#11182766;backdrop-filter:blur(8px);z-index:100;display:none;align-items:end;justify-content:center}.modal.show{display:flex}.sheet{width:min(720px,100%);max-height:88vh;overflow:auto;border-radius:30px 30px 0 0;padding:22px;background:#f8f9fb}.sheet-head{display:flex;justify-content:space-between;align-items:center}.sheet h3{margin:0}.close{background:#e9eaf0;border-radius:50%;width:34px;height:34px}.city-tabs{display:flex;gap:8px;overflow:auto;margin:15px 0}.city{padding:10px 15px;border-radius:13px;background:#fff}.city.active{background:#1c1c24;color:#fff}
-.toast{position:fixed;left:50%;bottom:95px;transform:translateX(-50%) translateY(20px);opacity:0;background:#191923;color:#fff;padding:11px 15px;border-radius:14px;z-index:120;font-size:13px;transition:.25s}.toast.show{opacity:1;transform:translateX(-50%)}
-@media(max-width:760px){.shell{padding:12px 12px 105px}.top{padding-bottom:12px}.hero{min-height:205px;padding:20px;border-radius:27px}.hero h2{font-size:27px}.grid{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr 1fr}.place img{height:130px}.profile{grid-template-columns:1fr}.avatar{height:130px}.bottom{bottom:9px}.nav i{font-size:18px}}
-@media(max-width:480px){.cards{grid-template-columns:1fr}.grid{gap:10px}.tile{min-height:112px;padding:15px}.hero p{font-size:13px}.event{grid-template-columns:58px 20px 1fr}}
+:root{--bg:#f5f6f8;--card:rgba(255,255,255,.78);--text:#15171a;--muted:#777b82;--line:rgba(20,20,20,.08);--accent:#111;--blue:#1677ff;--shadow:0 12px 35px rgba(0,0,0,.08);--radius:24px}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Helvetica Neue",Arial,sans-serif}
+button,input,textarea{font:inherit}button{border:0;cursor:pointer}body{min-height:100vh}
+.app{max-width:1180px;margin:auto;min-height:100vh;padding-bottom:110px}
+.top{padding:calc(env(safe-area-inset-top) + 18px) 18px 12px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;background:rgba(245,246,248,.82);backdrop-filter:blur(22px)}
+.brand{font-size:23px;font-weight:800;letter-spacing:-.5px}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:1px;margin-top:2px}
+.iconbtn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.8);box-shadow:0 5px 20px rgba(0,0,0,.07)}
+main{padding:0 16px}.screen{display:none;animation:rise .28s ease}.screen.active{display:block}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{margin-top:8px;border-radius:30px;min-height:285px;padding:24px;position:relative;overflow:hidden;color:white;background:linear-gradient(145deg,#24354b,#0b0e12 65%,#17232d);box-shadow:var(--shadow)}
+.hero:after{content:"";position:absolute;inset:auto -30px -90px;height:220px;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 65%);filter:blur(10px)}
+.hero h1{font-size:34px;line-height:1.08;margin:60px 0 10px;letter-spacing:-1.5px;position:relative;z-index:2}.hero p{color:rgba(255,255,255,.75);position:relative;z-index:2}
+.hero-actions{display:flex;gap:10px;position:relative;z-index:2}.pill{padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.15);color:white;backdrop-filter:blur(12px)}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 4px 12px}.section-title h2{font-size:19px;margin:0}.section-title span{font-size:13px;color:var(--muted)}
+.card{background:var(--card);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.8);border-radius:var(--radius);box-shadow:var(--shadow)}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick button{padding:18px 10px;border-radius:20px;background:white;box-shadow:0 8px 24px rgba(0,0,0,.06);text-align:left}.quick b{display:block;margin-top:12px}.quick small{color:var(--muted)}
+.trip-preview{padding:18px}.route{font-weight:800;font-size:18px}.date{color:var(--muted);font-size:13px;margin-top:5px}.bar{height:8px;background:#e8eaed;border-radius:10px;margin:16px 0 10px;overflow:hidden}.bar i{display:block;width:42%;height:100%;background:#111;border-radius:10px}
+.bottom{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:12px;width:min(720px,calc(100% - 24px));padding:8px;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.82);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.9);border-radius:25px;box-shadow:0 15px 45px rgba(0,0,0,.14)}
+.bottom button{background:transparent;color:#858991;padding:8px 3px;border-radius:18px;font-size:11px}.bottom button.active{color:#111;background:#f0f1f3;font-weight:800}.bottom .ico{font-size:20px;display:block;margin-bottom:3px}
+.toolbar{display:flex;gap:8px;overflow:auto;padding:4px 0 8px}.chip{white-space:nowrap;padding:10px 14px;border-radius:15px;background:white;color:#666}.chip.active{background:#111;color:#fff}
+.timeline{position:relative;padding-left:22px}.timeline:before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:#ddd}.day{margin:20px 0}.day h3{margin:0 0 12px;font-size:17px}.event{position:relative;padding:15px 15px 15px 17px;margin:9px 0;background:white;border-radius:18px;box-shadow:0 6px 20px rgba(0,0,0,.05)}.event:before{content:"";position:absolute;left:-20px;top:20px;width:10px;height:10px;border-radius:50%;background:#111;border:3px solid var(--bg)}.event .time{font-size:12px;color:var(--muted)}.event b{display:block;margin:5px 0}.event p{font-size:13px;color:#666;margin:0}.event .actions{margin-top:10px;display:flex;gap:7px}.mini{padding:8px 10px;border-radius:11px;background:#f1f2f4;font-size:12px}
+.citygrid,.foodgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.city,.place{overflow:hidden}.thumb{height:145px;background:linear-gradient(135deg,#cfd5db,#6d747d);display:flex;align-items:flex-end;padding:12px;color:white;font-weight:800;font-size:18px}.city .body,.place .body{padding:14px}.city small,.place small{color:var(--muted)}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.tag{font-size:11px;background:#f0f1f3;padding:6px 8px;border-radius:9px}
+.foodgrid{grid-template-columns:1fr}.place{display:grid;grid-template-columns:110px 1fr;min-height:130px}.place .thumb{height:100%;min-height:130px}.place .body{padding:14px}.place h3{margin:0 0 5px;font-size:16px}.place p{margin:7px 0;color:#666;font-size:12px;line-height:1.5}
+.panel{padding:18px;margin-top:12px}.panel h3{margin:0 0 12px}.form{display:grid;gap:10px}.form input,.form textarea{border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px;outline:none}.primary{background:#111;color:#fff;padding:13px 16px;border-radius:15px;font-weight:700}.secondary{background:#eef0f2;padding:13px 16px;border-radius:15px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(10px);display:none;align-items:flex-end;z-index:50}.modal.show{display:flex}.sheet{width:100%;max-height:88vh;overflow:auto;background:#f8f9fa;border-radius:28px 28px 0 0;padding:18px 18px calc(25px + env(safe-area-inset-bottom));animation:sheet .25s ease}@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}.handle{width:42px;height:5px;background:#d5d6d8;border-radius:5px;margin:0 auto 18px}.close{float:right;background:#e8e9eb;border-radius:50%;width:34px;height:34px}
+.empty{padding:35px 10px;text-align:center;color:var(--muted)}.notice{padding:13px 15px;background:#fff5df;border-radius:15px;color:#7a5a17;font-size:12px;margin-top:12px}
+@media(min-width:760px){main{padding:0 28px}.quick{grid-template-columns:repeat(6,1fr)}.foodgrid{grid-template-columns:repeat(2,1fr)}.hero{min-height:330px}.citygrid{grid-template-columns:repeat(4,1fr)}.bottom{bottom:20px}}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="shell">
-<header class="top">
-  <div class="brand"><div class="logo">旅</div><div><h1>旅伴</h1><p>TravelMate V2 · 旅行管家</p></div></div>
-  <button class="iconbtn" onclick="openModal('settings')">⚙️</button>
-</header>
-
+<header class="top"><div class="brand">旅伴 <small>TRAVELMATE V2.1</small></div><button class="iconbtn" onclick="openSheet('settings')">⚙️</button></header>
 <main>
-<section id="home" class="page active">
-  <div class="hero">
-    <div class="eyebrow">福建 · 9.28—10.4</div>
-    <h2>这一次，<br>让旅程有人帮你记得。</h2>
-    <p>行程、景点、美食、城市探索与 AI 规划集中在一个 App 里。你的福建旅行资料已经装进旅伴。</p>
-    <div class="hero-actions"><button class="primary" onclick="go('trip')">打开我的行程</button><button class="secondary" onclick="go('ai')">✨ AI 规划</button></div>
-  </div>
-  <div class="grid">
-    <button class="tile glass" onclick="go('trip')"><div class="ico">🗓️</div><b>我的行程</b><span>时间轴 · 方案 A / B</span></button>
-    <button class="tile glass" onclick="go('spots')"><div class="ico">📍</div><b>景点</b><span>四城精选目的地</span></button>
-    <button class="tile glass" onclick="go('food')"><div class="ico">🍜</div><b>美食</b><span>店铺 · 导航 · 加入</span></button>
-    <button class="tile glass" onclick="go('explore')"><div class="ico">🌏</div><b>城市探索</b><span>发现下一站</span></button>
-    <button class="tile glass" onclick="go('share')"><div class="ico">👥</div><b>好友分享</b><span>一起编辑旅行</span></button>
-    <button class="tile glass" onclick="go('me')"><div class="ico">👤</div><b>我的</b><span>本地数据与设置</span></button>
-    <button class="tile glass" onclick="openModal('plan')"><div class="ico">➕</div><b>快速加行程</b><span>随手记录一个地点</span></button>
-    <button class="tile glass" onclick="clearLocal()"><div class="ico">💾</div><b>本地保存</b><span>数据保存在本机</span></button>
-  </div>
-  <div class="section"><div class="section-head"><h3>当前旅程</h3><button onclick="go('trip')">查看全部</button></div><div class="trip-card glass"><div class="trip-top"><div><h3>福建四城 7 日完整行程</h3><div style="color:var(--muted);font-size:12px;margin-top:5px">福州 → 平潭 → 泉州 → 厦门</div></div><span class="badge">方案 A</span></div><div class="timeline" id="homeTimeline"></div></div></div>
+<section id="home" class="screen active">
+<div class="hero"><div>福建 · 9.28—10.4</div><h1>这一次，<br>让旅程有人帮你记得。</h1><p>行程、景点、美食与 AI 规划，都放在一个旅伴里。</p><div class="hero-actions"><button class="pill" onclick="go('trip')">打开我的行程</button><button class="pill" onclick="go('ai')">AI 规划</button></div></div>
+<div class="section-title"><h2>快速入口</h2><span>全部可点击</span></div>
+<div class="quick">
+<button onclick="go('trip')">🗓️<b>我的行程</b><small>时间轴</small></button>
+<button onclick="go('spots')">📍<b>景点</b><small>按城市</small></button>
+<button onclick="go('food')">🍜<b>美食</b><small>收藏与导航</small></button>
+<button onclick="go('explore')">🌏<b>城市探索</b><small>福建四城</small></button>
+<button onclick="go('friends')">👥<b>好友分享</b><small>分享行程</small></button>
+<button onclick="go('mine')">👤<b>我的</b><small>本地数据</small></button>
+</div>
+<div class="section-title"><h2>当前旅程</h2><span>方案可切换</span></div>
+<div class="card trip-preview"><div class="route">福州 → 平潭 → 泉州 → 厦门</div><div class="date">9月28日 — 10月4日 · 方案 A</div><div class="bar"><i></i></div><small>已整理 7 天核心行程</small></div>
 </section>
 
-<section id="ai" class="page">
-  <div class="section-head"><h3>AI 旅行规划</h3><button onclick="openModal('ark')">接口设置</button></div>
-  <div class="ai glass">
-    <div style="font-size:13px;color:var(--muted);margin-bottom:9px">火山方舟 · Ark 接口预留</div>
-    <textarea id="aiInput" placeholder="例如：10月1日从平潭去厦门，想要轻松一点，帮我安排下午到晚上的路线……"></textarea>
-    <div class="bar"><button class="primary" onclick="askAI()">✨ 开始规划</button><button class="smallbtn" onclick="document.getElementById('aiInput').value='帮我把福州、平潭、泉州、厦门 9.28—10.4 行程优化成不赶路、好拍照、好吃的版本。'">填入示例</button></div>
-    <div id="aiResult" class="ai-result">AI 结果会显示在这里。当前纯静态部署默认使用本地演示模式；接入真正的火山方舟 Key 建议通过 Cloudflare Worker / Firebase 代理，避免把 API Key 暴露在网页源码中。</div>
-  </div>
-  <div class="section"><div class="section-head"><h3>AI 可以帮你</h3></div><div class="grid"><div class="tile glass"><div class="ico">🧭</div><b>重新排程</b><span>根据时间与距离优化</span></div><div class="tile glass"><div class="ico">🍜</div><b>找附近美食</b><span>结合行程位置推荐</span></div><div class="tile glass"><div class="ico">☔</div><b>备选方案</b><span>下雨也不慌</span></div><div class="tile glass"><div class="ico">💰</div><b>预算估算</b><span>交通、门票、吃饭</span></div></div></div>
+<section id="trip" class="screen">
+<div class="section-title"><h2>我的行程</h2><button class="primary" onclick="addEvent()">＋ 添加</button></div>
+<div class="toolbar"><button class="chip active" id="planA" onclick="setPlan('A')">方案 A · 四城</button><button class="chip" id="planB" onclick="setPlan('B')">方案 B · 三城</button></div>
+<div class="timeline" id="timeline"></div>
 </section>
 
-<section id="trip" class="page">
-  <div class="section-head"><h3>我的行程</h3><button onclick="openModal('plan')">＋ 添加</button></div>
-  <div class="chips" id="planTabs"></div>
-  <div id="tripContent"></div>
+<section id="spots" class="screen">
+<div class="section-title"><h2>景点</h2><span>按城市浏览</span></div>
+<div class="toolbar" id="spotChips"></div><div class="citygrid" id="spotList"></div>
 </section>
 
-<section id="spots" class="page">
-  <div class="section-head"><h3>景点</h3><button onclick="openModal('city')">城市筛选</button></div>
-  <div class="chips" id="spotCities"></div><div class="search"><input id="spotSearch" placeholder="搜索景点、城市……" oninput="renderSpots()"></div><div class="cards" id="spotCards"></div>
+<section id="food" class="screen">
+<div class="section-title"><h2>美食</h2><span>复制 · 导航 · 加入</span></div>
+<div class="toolbar" id="foodChips"></div><div class="foodgrid" id="foodList"></div>
 </section>
 
-<section id="food" class="page">
-  <div class="section-head"><h3>美食</h3><button onclick="openModal('city')">城市筛选</button></div>
-  <div class="chips" id="foodCities"></div><div class="search"><input id="foodSearch" placeholder="搜索店铺、菜品……" oninput="renderFood()"></div><div class="cards" id="foodCards"></div>
+<section id="explore" class="screen">
+<div class="section-title"><h2>城市探索</h2><span>福建</span></div>
+<div class="citygrid">
+<div class="card city" onclick="filterCity('福州')"><div class="thumb">福州</div><div class="body"><b>榕城烟火</b><br><small>三坊七巷 · 闽江 · 老字号</small></div></div>
+<div class="card city" onclick="filterCity('平潭')"><div class="thumb">平潭</div><div class="body"><b>风车与海</b><br><small>坛南湾 · 长江澳 · 石头厝</small></div></div>
+<div class="card city" onclick="filterCity('泉州')"><div class="thumb">泉州</div><div class="body"><b>世遗古城</b><br><small>开元寺 · 西街 · 蟳埔</small></div></div>
+<div class="card city" onclick="filterCity('厦门')"><div class="thumb">厦门</div><div class="body"><b>海风与老城</b><br><small>鼓浪屿 · 沙坡尾 · 八市</small></div></div>
+</div>
+<div class="panel card"><h3>旅伴的小提示</h3><p>国庆期间热门景点、人流和交通都会明显增加。这里先以你提供的行程为主，后续可接实时地图、天气和票务接口。</p></div>
 </section>
 
-<section id="explore" class="page">
-  <div class="hero" style="min-height:180px;background:linear-gradient(135deg,#20242a,#497d73 60%,#b4ddd2)"><div class="eyebrow">城市探索</div><h2>下一站，去哪里？</h2><p>把景点、美食和城市气质放在一起看，找到适合你的旅行方式。</p></div>
-  <div class="section"><div class="cards" id="cityCards"></div></div>
+<section id="friends" class="screen">
+<div class="section-title"><h2>好友分享</h2><span>本地生成</span></div>
+<div class="panel card"><h3>分享我的福建行程</h3><p id="shareText">福州 → 平潭 → 泉州 → 厦门 · 9.28—10.4</p><div style="display:flex;gap:8px"><button class="primary" onclick="shareTrip()">分享行程</button><button class="secondary" onclick="copyText(document.getElementById('shareText').innerText)">复制</button></div><div class="notice">V2.1 先使用系统分享/复制；后续接 Firebase 后可生成真正的多人协作链接。</div></div>
 </section>
 
-<section id="share" class="page">
-  <div class="section-head"><h3>好友分享</h3><button onclick="shareTrip()">分享行程</button></div>
-  <div class="trip-card glass"><h3>福建旅行小组</h3><p style="color:var(--muted);line-height:1.7">把你的行程分享给好友。当前版本支持本机分享/复制链接；Firebase 好友协作接口已预留。</p><div class="grid" style="margin-top:12px"><div class="tile glass"><div class="ico">👤</div><b>我</b><span>管理员</span></div><div class="tile glass"><div class="ico">👥</div><b>旅行伙伴</b><span>待邀请</span></div></div></div>
-  <div class="section"><div class="trip-card glass"><h3>协作功能预留</h3><p style="color:var(--muted);line-height:1.7">Firebase Auth · Firestore · 实时协作 · 分享链接权限。</p></div></div>
+<section id="mine" class="screen">
+<div class="section-title"><h2>我的</h2><span>TravelMate</span></div>
+<div class="panel card"><h3>本地数据</h3><p>行程和自定义内容默认保存在当前设备浏览器，不需要服务器。</p><button class="secondary" onclick="clearLocal()">清除本地数据</button></div>
+<div class="panel card"><h3>后续接口</h3><p>Firebase 云端同步 · 火山方舟 AI · 地图导航 · 好友协作</p></div>
 </section>
 
-<section id="me" class="page">
-  <div class="profile"><div class="avatar">旅</div><div><h2 style="margin:8px 0">我的旅伴</h2><p style="color:var(--muted)">旅行数据保存在当前设备 LocalStorage。</p><div class="settings"><div class="setting glass"><div>📌 已加入行程 <span>本地保存</span></div><b id="savedCount">0</b></div><div class="setting glass"><div>☁️ 云端能力 <span>Firebase 预留</span></div><b>待接入</b></div><div class="setting glass"><div>🤖 AI <span>火山方舟预留</span></div><b>Ark</b></div></div></div></div>
-  <div class="section"><div class="setting glass" onclick="openModal('ark')"><div>AI 接口设置<span>配置代理地址，不建议把 Key 写入前端</span></div><b>›</b></div><div class="setting glass" onclick="clearLocal()"><div>清除本地数据<span>恢复初始状态</span></div><b>›</b></div></div>
+<section id="ai" class="screen">
+<div class="section-title"><h2>AI 旅行规划</h2><span>火山方舟 · 预留</span></div>
+<div class="panel card">
+<h3>告诉旅伴你想怎么走</h3>
+<div class="form"><textarea id="aiInput" rows="5" placeholder="例如：10月2日下午到厦门，想看海边日落，不要太累，晚上吃本地小吃。"></textarea><button class="primary" onclick="planAI()">生成旅行规划</button></div>
+<div id="aiResult"></div>
+<div class="notice">当前为前端演示模式。生产环境请通过 Cloudflare Worker / Firebase Functions 调用火山方舟，避免把 API Key 暴露在网页源码中。</div>
+</div>
 </section>
 </main>
-</div>
-
-<nav class="bottom glass">
-<button class="nav active" data-page="home" onclick="go('home')"><i>⌂</i>首页</button>
-<button class="nav" data-page="trip" onclick="go('trip')"><i>🗓</i>行程</button>
-<button class="nav" data-page="spots" onclick="go('spots')"><i>◉</i>景点</button>
-<button class="nav" data-page="food" onclick="go('food')"><i>🍜</i>美食</button>
-<button class="nav" data-page="explore" onclick="go('explore')"><i>✦</i>探索</button>
-<button class="nav" data-page="me" onclick="go('me')"><i>●</i>我的</button>
+<nav class="bottom">
+<button class="active" data-nav="home" onclick="go('home')"><span class="ico">⌂</span>首页</button>
+<button data-nav="trip" onclick="go('trip')"><span class="ico">▣</span>行程</button>
+<button data-nav="spots" onclick="go('spots')"><span class="ico">⌖</span>景点</button>
+<button data-nav="food" onclick="go('food')"><span class="ico">♨</span>美食</button>
+<button data-nav="mine" onclick="go('mine')"><span class="ico">●</span>我的</button>
 </nav>
-
-<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div><div class="toast" id="toast"></div>
 </div>
-<script>
-const img=(q)=>`https://images.unsplash.com/photo-${q}?auto=format&fit=crop&w=900&q=82`;
-const cities=['全部','福州','平潭','泉州','厦门'];
-const spots=[
-['福州','三坊七巷','南后街、衣锦坊、文儒坊，福州古城夜游核心','免费','photo-1548919973-5cef591cdbc9'],
-['福州','烟台山历史风貌区','民国西洋建筑、红砖洋楼与闽江江景','免费','photo-1516483638261-f4dbaf036963'],
-['福州','西禅寺','千年古寺、报恩石塔与荔枝林','20元','photo-1548013146-72479768bada'],
-['福州','福道金牛山步道','悬空森林步道，适合傍晚看城市夜景','免费','photo-1441974231531-c6227db76b6e'],
-['福州','上下杭历史街区','老商贸码头与传统街巷','免费','photo-1523731407965-2430cd12f5e4'],
-['福州','闽江夜游','台江码头夜游，适合看城市灯光','约98元','photo-1500534623283-312aade485b7'],
-['福州','鼓山涌泉寺','名山古寺、摩崖石刻与城市全景','约40元','photo-1518709268805-4e9042af9f23'],
-['平潭','猴研岛68海里景区','红色礁石海岸、海峡之眼地标','约68元','photo-1507525428034-b723cf961d3e'],
-['平潭','将军山','俯瞰坛南湾，适合南线深度游','约20元','photo-1500530855697-b586d89ba3ee'],
-['平潭','猫头墘渔村','石头厝、山海与原生态渔村','免费','photo-1500534623283-312aade485b7'],
-['平潭','和平村S弯风车公路','风车、沿海弯道与公路大片','免费','photo-1493246507139-91e8fad9978e'],
-['平潭','象鼻湾','长长沙滩深入海面的独特海岸线','免费','photo-1507525428034-b723cf961d3e'],
-['平潭','东庠岛','渔村、赶海与海岛日落','船票约15元','photo-1510414842594-a61c69b5ae57'],
-['平潭','北部生态廊道F2','风车、玻璃栈道与大海同框','免费','photo-1501785888041-af3ef285b470'],
-['平潭','仙人井','海蚀竖井与黑礁石海岸','约21元','photo-1500530855697-b586d89ba3ee'],
-['平潭','北港文创村','石头厝村落与海边文创空间','免费','photo-1500534623283-312aade485b7'],
-['平潭','镜沙黑沙滩','黑色礁石与海浪，适合拍照','免费','photo-1500534623283-312aade485b7'],
-['平潭','长江澳风车沙滩','风车海岸与日落','免费','photo-1470770841072-f978cf4d019e'],
-['泉州','开元寺+西街','东西塔、古城街巷与闽南烟火','免费','photo-1548013146-72479768bada'],
-['泉州','蟳埔村','簪花围、渔村古厝与滩涂海景','进村免费','photo-1520637836862-4d197d17c50a'],
-['泉州','洛阳桥','千年跨海石桥与潮汐景观','免费','photo-1500534623283-312aade485b7'],
-['泉州','安平桥','古代跨海长桥，适合半日人文游','免费','photo-1526778548025-fa2f459cd5c1'],
-['泉州','清净寺','古老伊斯兰建筑与闽南古城融合','约3元','photo-1548013146-72479768bada'],
-['泉州','府文庙','宋代闽南文庙建筑群','约10元','photo-1518709268805-4e9042af9f23'],
-['泉州','承天禅寺','古寺庭院，清幽适合慢逛','免费','photo-1548013146-72479768bada'],
-['泉州','崇武古城','石头海防古城与惠女风情海岸','约45元','photo-1507525428034-b723cf961d3e'],
-['厦门','鼓浪屿','老别墅、海岛街巷与日光岩','船票/景点另计','photo-1507525428034-b723cf961d3e'],
-['厦门','沙坡尾艺术西区','老渔港、艺术街区与双子塔倒影','免费','photo-1492684223066-81342ee5ff30'],
-['厦门','演武大桥观景平台','看海上日落与鼓浪屿','免费','photo-1500534623283-312aade485b7'],
-['厦门','集美学村+十里长堤','嘉庚建筑、海上地铁与日落','免费','photo-1523731407965-2430cd12f5e4'],
-['厦门','五缘湾湿地公园','城市湿地、黑天鹅与慢节奏散步','免费','photo-1441974231531-c6227db76b6e'],
-['厦门','筼筜湖','城市内湖、白鹭与夜景','免费','photo-1501785888041-af3ef285b470'],
-['厦门','华新路老别墅街区','南洋老别墅、书店与咖啡馆','免费','photo-1511818966892-d7d671e672a2'],
-['厦门','溪岸路花鸟市场','老厦门市井烟火与花市','免费','photo-1490750967868-88aa4486c946'],
-['厦门','南普陀寺','古寺、素饼与校园山海景观','免费','photo-1548013146-72479768bada'],
-['厦门','厦门园林植物园','雨林喷雾区与多肉植物区','约30元','photo-1441974231531-c6227db76b6e'],
-['厦门','黄厝海滩','环岛路骑行、海边散步与日落','免费','photo-1507525428034-b723cf961d3e']
-];
-const foods=[
-['福州','没牙伯花生汤','花生汤、手工芋泥、糯米饭','约10元','老药洲街182号','photo-1551024506-0bccd828d307'],
-['福州','依土捞化','米粉捞化+猪肝+海蛎+油条','约25元','庆城路39号','photo-1562565652-a0d8f0c59eb4'],
-['福州','耳聋伯元宵','咸鲜肉元宵、花生汤圆','约15元','同德路2号','photo-1498837167922-ddd27525d352'],
-['福州','同利肉燕','扁肉燕、燕丝面','约28元','澳门路19号','photo-1551218808-94e220e084d2'],
-['福州','永和鱼丸','包心鱼丸','约25元','老药洲街16号','photo-1547592180-85f173990554'],
-['福州','安泰社区食堂','荔枝肉、南煎肝、爆炒双脆','约65元','东泰路262号','photo-1547592180-85f173990554'],
-['福州','老福州徐记','醉排骨、鸡汤汆海蚌、兴化炒米粉','约58元','鼓西路168号','photo-1547592180-85f173990554'],
-['平潭','谭式煎包','海鲜煎包、海蛎饼、豆浆','约15元','翠园中路','photo-1601050690597-df0568f70950'],
-['平潭','捞嘢海肠捞饭','海肠捞饭、蒜蓉生蚝捞饭','约35元','东门庄111号','photo-1547592180-85f173990554'],
-['平潭','食为福传统老店','时来运转、八珍炒糕、天长地久','约30元','龙里路翠园新庄33号','photo-1559339352-11d035aa65de'],
-['平潭','战地蚝王烧烤','炭烤生蚝、海鲜烤串、皮皮虾','约60元','台亚岚新城','photo-1551218808-94e220e084d2'],
-['平潭','云记烤鸭','秘制烤鸭、鸭架清汤','约40元','城东街18号','photo-1544025162-d76694265947'],
-['平潭','十三妹咸米时店','薯粉小吃、海蛎煎','约32元','西航路','photo-1601050690597-df0568f70950'],
-['平潭','毛记潮汕砂锅粥','螃蟹鲜虾粥、金鲟粥','约45元','翠园中路','photo-1572449043416-55f4685c9bb7'],
-['泉州','水门国仔面线糊','面线糊+醋肉+大肠+油条','约20元','水门巷21号','photo-1563379926898-05f4575a45d8'],
-['泉州','侯阿婆烧肉粽','五花肉肉粽','约23元','西街78号','photo-1601050690597-df0568f70950'],
-['泉州','秉正堂石花膏','四果石花膏、红豆芋圆','约12元','天后路10号','photo-1499636136210-6f4ee915583e'],
-['泉州','忠记盐烧姜母鸭','砂锅姜母鸭','约50元','崇福路91号','photo-1544025162-d76694265947'],
-['泉州','好成财牛排馆','红烧牛排、咸饭、牛肉羹','约30元','涂门街221号','photo-1547592180-85f173990554'],
-['泉州','亚佛润饼皮','闽南润饼','约15元','西街','photo-1515003197210-e0cd71810b5f'],
-['泉州','长火土笋冻','土笋冻','约15元','安海镇','photo-1559339352-11d035aa65de'],
-['泉州','张耀伯菜粿','菜粿','约4元','安海馆口巷','photo-1601050690597-df0568f70950'],
-['厦门','四里沙茶面','沙茶面、醋肉、鸭血、肉丸','约25元','湖滨四里14号','photo-1562565652-a0d8f0c59eb4'],
-['厦门','劳松扁食','扁食汤+拌面','约15元','小学路26号','photo-1551183053-bf91a1d81141'],
-['厦门','阿吉仔馅饼','椰子饼、绿豆馅饼','约20元','大元路37号','photo-1558961363-fa8fdf82db35'],
-['厦门','菜丸妈妈','炸菜丸、炸醋肉、炸扁食','约15元','故宫路26号','photo-1601050690597-df0568f70950'],
-['厦门','浮屿大同鸭肉粥','鸭肉粥、油条、海蛎','约20元','厦禾路174号','photo-1572449043416-55f4685c9bb7'],
-['厦门','莲欢海蛎煎','海蛎煎','约22元','中山路巷内','photo-1551218808-94e220e084d2'],
-['厦门','八市阿杰五香','五香卷','约4元','开元路第八市场','photo-1601050690597-df0568f70950'],
-['厦门','思北花生汤','花生汤','约8元','思北路','photo-1551024506-0bccd828d307'],
-['厦门','小眼镜大排档','海鲜大排档','约85元','槟榔店','photo-1547592180-85f173990554']
-];
-const itineraryA=[
-['9月28日','福州','抵达福州·三坊七巷夜游',[['抵达后-18:30','酒店办理入住','锦江都城酒店·福州三坊七巷东街口地铁站店'],['18:30-20:00','三坊七巷南后街夜景','衣锦坊、文儒坊、文保古厝、爱心树'],['20:00-21:30','达明美食街','夜宵市集、文创集市'],['21:30','返回酒店','休息']]], 
-['9月29日','平潭','福州半日 → 平潭南线深度游',[['08:30-09:30','林则徐纪念馆','免费预约；周一闭馆'],['09:40-11:20','烟台山历史街区','红砖洋楼与闽江江景'],['12:50-13:36','D9971 福州→平潭','动车；抵达后网约车去酒店'],['14:30','租电动车','续航约100km，60-80元/天'],['15:00-17:30','坛南湾全线','田美澳→远垱澳→情侣湾'],['17:30-18:30','坛南湾日落','海上橘子海'],['19:00-20:30','西航路美食街','本地晚餐'],['20:30','蓝眼泪蹲守','季节性现象，不保证']]], 
-['9月30日','平潭','北线风车海全天游玩',[['05:30','龙王头日出','可选早起'],['08:40','酒店出发骑行北线','电动车'],['09:10-10:40','仙人井','海蚀竖井、黑礁石'],['10:55-12:40','北港文创村','石头厝漫步'],['13:10-15:10','环岛公路+镜沙','平潭小冰岛'],['15:10-17:40','长江澳风车沙滩','赶海拾贝'],['17:40-18:40','长江澳日落','福建热门日落机位'],['19:10','县城夜宵','返回酒店']]], 
-['10月1日','泉州','平潭收尾 → 泉州古城',[['08:00','早餐','行李寄存'],['08:30-10:00','龙王头 / 和平村二选一','按体力选择'],['10:30','还车取行李','前往平潭站'],['10:45-12:36','D6294 平潭→泉州东','动车'],['13:30-15:30','开元寺+西街','东西塔与古城街巷'],['15:30-17:00','西街纵深小巷','逛吃'],['17:00','泉州钟楼','拍照'],['17:30-18:30','承天禅寺','免费'],['18:30-19:10','清净寺+关岳庙','涂门街片区'],['19:30-21:00','西街夜景','泉州古早味夜宵']]], 
-['10月2日','厦门','泉州半日 → 厦门',[['09:00-10:30','天后宫+中山路','骑楼老街'],['10:30-11:20','金鱼巷','文艺小巷'],['12:13-13:03','D6567 泉州→厦门','厦门站'],['13:10','入住酒店','希岸酒店·厦门火车站万象城店'],['14:30-16:30','沙坡尾艺术西区','双子塔倒影、老渔港'],['16:30-17:30','演武大桥','海上日落'],['18:00-21:00','中山路+八市','闽南夜宵']]], 
-['10月3日','厦门','鼓浪屿全天深度游',[['07:30','酒店出发','前往邮轮中心厦鼓码头'],['08:30','乘船登岛','往返船票约35元；提前预约'],['09:00-10:00','最美转角+风琴博物馆','岛上漫步'],['10:00-11:30','日光岩','登顶看红瓦海景'],['11:30-13:00','菽庄花园+钢琴博物馆','海园林'],['13:30-16:00','鹿礁路+笔山路','小众万国老别墅'],['16:00-17:30','皓月园+港仔后沙滩','海边散步'],['17:30','返程','乘船回厦门市区']]], 
-['10月4日','厦门','半日休闲+返程',[['上午','路线1','南普陀寺+植物园'],['上午','路线2','黄厝海滩+环岛路骑行'],['12:00前','酒店退房','根据返程车次安排'],['返程','厦门站/厦门北站','预留充足安检时间']]]
-];
-const itineraryB=[...itineraryA.slice(0,3),['10月1日','厦门','平潭收尾 → 厦门岛内夜游',[['08:00-08:30','酒店早餐','行李寄存'],['08:30-10:00','龙王头 / 和平村二选一','优先龙王头'],['10:00-11:00','还车+前往平潭站','提前进站'],['11:54-14:45','C5192 平潭→厦门','直达厦门站'],['14:50-15:40','入住酒店','厦门火车站万象城附近'],['16:00-17:30','沙坡尾艺术西区','下午茶、海边'],['17:30-18:30','演武大桥','海上日落'],['18:30-21:00','中山路+八市','闽南夜宵']]],['10月2日','厦门','鼓浪屿全天深度游',[['08:30','乘船登鼓浪屿','提前预约'],['09:00-17:30','日光岩+菽庄+老别墅+沙滩','完整深度游'],['19:00','万象城晚餐','闽南菜']]],['10月3日','厦门','厦门全天三路线任选',[['09:00-18:30','路线1：集美学村+十里长堤','侨乡建筑+日落'],['09:00-19:00','路线2：黄厝海滩+环岛路','休闲看海'],['09:00-18:00','路线3：华新路+溪岸路+筼筜湖','老城文艺烟火线']]],['10月4日','厦门','半日休闲+返程',[['上午','南普陀+植物园 / 黄厝海滩','二选一'],['12:00前','酒店退房','根据返程车次安排'],['返程','厦门站/厦门北站','预留安检时间']]]];
-let currentPlan=localStorage.getItem('tm_plan')||'A', currentCity='全部';
 
-function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='trip')renderTrip();if(id==='spots')renderSpots();if(id==='food')renderFood();if(id==='explore')renderCities();updateCount()}
-function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1800)}
-function renderHome(){document.getElementById('homeTimeline').innerHTML=itineraryA.slice(0,4).map(d=>`<div class="event"><div class="time">${d[0]}</div><div class="dotline"></div><div><h4>${d[2]}</h4><p>${d[1]}</p></div></div>`).join('')}
-function renderTrip(){const data=currentPlan==='A'?itineraryA:itineraryB;document.getElementById('planTabs').innerHTML=['A','B'].map(p=>`<button class="chip ${currentPlan===p?'active':''}" onclick="setPlan('${p}')">方案 ${p} · ${p==='A'?'四城完整版':'三城休闲版'}</button>`).join('');document.getElementById('tripContent').innerHTML=data.map((d,i)=>`<div class="section trip-card glass"><div class="trip-top"><div><h3>${d[0]} · ${d[1]}</h3><div style="color:var(--muted);font-size:12px;margin-top:5px">${d[2]}</div></div><span class="badge">${i+1}</span></div><div class="timeline">${d[3].map(e=>`<div class="event"><div class="time">${e[0]}</div><div class="dotline"></div><div><h4>${e[1]}</h4><p>${e[2]}</p></div></div>`).join('')}</div></div>`).join('')}
-function setPlan(p){currentPlan=p;localStorage.setItem('tm_plan',p);renderTrip();toast('已切换到方案 '+p)}
-function cityChips(target,cb){document.getElementById(target).innerHTML=cities.map(c=>`<button class="chip ${currentCity===c?'active':''}" onclick="setCity('${c}','${cb}')">${c}</button>`).join('')}
-function setCity(c,where){currentCity=c;where==='spots'?renderSpots():renderFood()}
-function renderSpots(){cityChips('spotCities','spots');const q=(document.getElementById('spotSearch')?.value||'').toLowerCase();const list=spots.filter(x=>(currentCity==='全部'||x[0]===currentCity)&&(`${x[0]}${x[1]}${x[2]}`).toLowerCase().includes(q));document.getElementById('spotCards').innerHTML=list.map(x=>`<article class="place glass"><img src="${img(x[4])}" loading="lazy"><div class="place-body"><h4>${x[1]}</h4><p>${x[0]} · ${x[2]}</p><div class="row"><button class="smallbtn primary" onclick="addPlace('${x[1]}')">＋ 加入行程</button><button class="smallbtn" onclick="navigate('${x[1]}')">导航</button></div></div></article>`).join('')}
-function renderFood(){cityChips('foodCities','food');const q=(document.getElementById('foodSearch')?.value||'').toLowerCase();const list=foods.filter(x=>(currentCity==='全部'||x[0]===currentCity)&&(`${x[0]}${x[1]}${x[2]}${x[4]}`).toLowerCase().includes(q));document.getElementById('foodCards').innerHTML=list.map(x=>`<article class="place glass"><img src="${img(x[5])}" loading="lazy"><div class="place-body"><h4>${x[1]}</h4><p>${x[0]} · ${x[2]} · ${x[3]}</p><p style="margin-top:4px">📍 ${x[4]}</p><div class="row"><button class="smallbtn primary" onclick="addPlace('${x[1]}')">＋ 加入行程</button><button class="smallbtn" onclick="copyText('${x[4]}')">复制地址</button><button class="smallbtn" onclick="navigate('${x[4]}')">导航</button></div></div></article>`).join('')}
-function renderCities(){document.getElementById('cityCards').innerHTML=[['福州','古城、人文、闽江夜色','7+景点 · 老字号小吃'],['平潭','风车海、石头厝、海岛日落','8+景点 · 海鲜小吃'],['泉州','世遗古城、闽南烟火','8+景点 · 面线糊/牛肉'],['厦门','海岛、骑楼、老城与日落','10+景点 · 沙茶面/海鲜']].map((x,i)=>`<article class="place glass"><img src="${img(['1548919973-5cef591cdbc9','1507525428034-b723cf961d3e','1523731407965-2430cd12f5e4','1492684223066-81342ee5ff30'][i])}"><div class="place-body"><h4>${x[0]}</h4><p>${x[1]}</p><p style="margin-top:5px">${x[2]}</p><div class="row"><button class="smallbtn primary" onclick="currentCity='${x[0]}';go('spots')">探索景点</button><button class="smallbtn" onclick="currentCity='${x[0]}';go('food')">找美食</button></div></div></article>`).join('')}
-function addPlace(n){let a=JSON.parse(localStorage.getItem('tm_added')||'[]');if(!a.includes(n))a.push(n);localStorage.setItem('tm_added',JSON.stringify(a));updateCount();toast('已加入我的行程：'+n)}
-function updateCount(){const a=JSON.parse(localStorage.getItem('tm_added')||'[]');const el=document.getElementById('savedCount');if(el)el.textContent=a.length}
-function copyText(t){navigator.clipboard?.writeText(t);toast('地址已复制')}
-function navigate(q){window.open('https://www.amap.com/search?query='+encodeURIComponent(q),'_blank')}
-function shareTrip(){if(navigator.share)navigator.share({title:'旅伴旅行管家 · 福建行程',text:'我的福建旅行行程，来自旅伴旅行管家'});else{copyText(location.href);toast('分享链接已复制')}}
-function clearLocal(){if(confirm('确定清除本机保存的行程数据吗？')){localStorage.removeItem('tm_added');toast('已清除本地数据');updateCount()}}
-function askAI(){const v=document.getElementById('aiInput').value.trim();if(!v){toast('先告诉我你想怎么旅行');return}document.getElementById('aiResult').textContent='正在根据你的要求生成旅行建议……\\n\\n【本地演示结果】\\n1. 先确定城市与日期，再按景点距离排序。\\n2. 上午安排人文景点，下午安排海边/城市漫步。\\n3. 美食优先放在行程动线附近，减少折返。\\n4. 如果遇到下雨，可自动切换室内备选。\\n\\n你的需求：'+v+'\\n\\n正式接通火山方舟后，这里会替换成真实 AI 结果。'}
-function openModal(type){const m=document.getElementById('modal'),s=document.getElementById('sheet');let h='';if(type==='ark')h=`<div class="sheet-head"><h3>AI 接口设置</h3><button class="close" onclick="closeModal()">×</button></div><div style="margin-top:18px"><p style="color:var(--muted);font-size:13px;line-height:1.7">GitHub Pages 是纯前端环境，不能安全保存火山方舟 API Key。正式生产版建议使用 Cloudflare Worker / Firebase Functions 做代理。</p><input id="arkProxy" value="${localStorage.getItem('tm_ark_proxy')||''}" placeholder="代理地址，例如 https://你的worker.workers.dev/api/ark" style="width:100%;padding:14px;border:1px solid var(--line);border-radius:15px"><button class="primary" style="margin-top:10px" onclick="saveArk()">保存代理地址</button></div>`;else if(type==='settings')h=`<div class="sheet-head"><h3>旅伴设置</h3><button class="close" onclick="closeModal()">×</button></div><div class="section settings"><div class="setting glass"><div>视觉风格<span>iOS · 毛玻璃 · 动画</span></div><b>V2</b></div><div class="setting glass"><div>数据<span>LocalStorage</span></div><b>本地</b></div><div class="setting glass"><div>后续云端<span>Firebase</span></div><b>预留</b></div></div>`;else if(type==='plan')h=`<div class="sheet-head"><h3>快速加入行程</h3><button class="close" onclick="closeModal()">×</button></div><div style="margin-top:18px"><input id="customPlace" placeholder="例如：曾厝垵、某家餐厅……" style="width:100%;padding:14px;border:1px solid var(--line);border-radius:15px"><button class="primary" style="margin-top:10px" onclick="let v=document.getElementById('customPlace').value.trim();if(v){addPlace(v);closeModal()}">加入</button></div>`;else h=`<div class="sheet-head"><h3>选择城市</h3><button class="close" onclick="closeModal()">×</button></div><div class="city-tabs">${cities.map(c=>`<button class="city" onclick="currentCity='${c}';closeModal();renderSpots();renderFood()">${c}</button>`).join('')}</div>`;s.innerHTML=h;m.classList.add('show')}
-function saveArk(){localStorage.setItem('tm_ark_proxy',document.getElementById('arkProxy').value.trim());closeModal();toast('接口地址已保存')}
-function closeModal(){document.getElementById('modal').classList.remove('show')}
-document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
-renderHome();renderTrip();renderSpots();renderFood();renderCities();updateCount();
+<div class="modal" id="modal" onclick="if(event.target.id==='modal')closeSheet()"><div class="sheet"><div class="handle"></div><button class="close" onclick="closeSheet()">×</button><div id="sheetContent"></div></div></div>
+
+<script>
+const A=[
+['9月28日','福州','抵达后','锦江都城酒店入住','福州市鼓楼区省府路9号'],
+['9月28日','福州','18:30–20:00','三坊七巷南后街夜游','衣锦坊、文儒坊、文保古厝、爱心树'],
+['9月28日','福州','20:00–21:30','达明美食街','夜宵市集 · 文创集市'],
+['9月29日','福州 → 平潭','08:30–09:30','林则徐纪念馆','凭身份证免费预约'],
+['9月29日','福州 → 平潭','09:40–11:20','烟台山历史街区','民国洋楼 · 闽江江景'],
+['9月29日','福州 → 平潭','12:50–13:36','D9971 福州→平潭','13:36 抵达平潭站'],
+['9月29日','平潭','15:00–17:30','坛南湾全线','田美澳 → 远垱澳 → 情侣湾'],
+['9月29日','平潭','17:30–18:30','坛南湾海上橘子海日落','日落机位'],
+['9月29日','平潭','19:00–20:30','西航路本地美食街','晚餐'],
+['9月30日','平潭','05:30','龙王头沙滩日出（可选）','早起选项'],
+['9月30日','平潭','09:10–10:40','仙人井景区','海蚀竖井 · 黑礁石海岸'],
+['9月30日','平潭','10:55–12:40','北港文创石头厝','村落漫步'],
+['9月30日','平潭','13:10–15:10','镜沙黑沙滩','环岛公路 · 平潭小冰岛'],
+['9月30日','平潭','15:10–17:40','长江澳风车沙滩','赶海拾贝'],
+['9月30日','平潭','17:40–18:40','长江澳风车日落','福建热门日落机位'],
+['10月1日','平潭 → 泉州','08:30–10:00','龙王头 / 和平村S弯（二选一）','收尾游玩'],
+['10月1日','平潭 → 泉州','10:45–12:36','D6294 平潭→泉州东','抵达泉州东站'],
+['10月1日','泉州','13:30–15:30','开元寺 + 西街','东西塔 · 世遗核心'],
+['10月1日','泉州','15:30–17:00','西街纵深小巷','逛吃'],
+['10月1日','泉州','17:00–18:30','泉州钟楼 + 承天禅寺','古城漫步'],
+['10月1日','泉州','18:30–19:10','清净寺 + 关岳庙','涂门街片区'],
+['10月2日','泉州 → 厦门','09:00–10:30','天后宫 + 中山路','骑楼老街'],
+['10月2日','泉州 → 厦门','10:30–11:20','金鱼巷','文艺小巷'],
+['10月2日','泉州 → 厦门','12:13–13:03','D6567 泉州→厦门','厦门站'],
+['10月2日','厦门','14:30–16:30','沙坡尾艺术西区','双子塔倒影'],
+['10月2日','厦门','16:30–17:30','演武大桥观景平台','海上日落'],
+['10月2日','厦门','18:00–21:00','中山路 + 第八市场','闽南夜宵'],
+['10月3日','厦门','08:30','厦鼓码头→鼓浪屿','提前预约船票'],
+['10月3日','厦门','09:00–10:00','最美转角 + 风琴博物馆','鼓浪屿'],
+['10月3日','厦门','10:00–11:30','日光岩','俯瞰全岛'],
+['10月3日','厦门','11:30–13:00','菽庄花园 + 钢琴博物馆','海园林'],
+['10月3日','厦门','13:30–16:00','鹿礁路 + 笔山路','万国老别墅'],
+['10月3日','厦门','16:00–17:30','皓月园 + 港仔后沙滩','海边'],
+['10月4日','厦门','上午','南普陀 + 植物园 / 黄厝海滩（二选一）','根据返程时间选择'],
+['10月4日','厦门','12:00前','酒店退房并返程','预留进站时间']
+];
+const B=A.filter(x=>!['10月1日','10月2日','泉州'].some(k=>x[0].includes(k)||x[1].includes(k))).concat([
+['10月1日','平潭 → 厦门','08:30–10:00','龙王头 / 和平村S弯（二选一）','收尾游玩'],
+['10月1日','平潭 → 厦门','11:54–14:45','C5192 平潭→厦门','直达厦门站'],
+['10月1日','厦门','16:00–17:30','沙坡尾艺术西区','双子塔倒影'],
+['10月1日','厦门','17:30–18:30','演武大桥观景平台','海上日落'],
+['10月1日','厦门','18:30–21:00','中山路 + 第八市场','闽南夜宵'],
+['10月2日','厦门','08:30','厦鼓码头→鼓浪屿','鼓浪屿全天'],
+['10月2日','厦门','09:00–17:30','鼓浪屿深度游','日光岩 · 菽庄花园 · 老别墅'],
+['10月3日','厦门','09:00–18:30','集美学村 / 黄厝 / 老城（三选一）','全天路线'],
+['10月4日','厦门','上午','南普陀 + 植物园 / 黄厝海滩（二选一）','返程']
+]);
+
+const spots={
+'福州':[['三坊七巷','南后街、衣锦坊、文儒坊','古厝夜景 · 人文'],['烟台山历史风貌区','仓山区乐群路','民国洋楼 · 江景'],['上下杭历史街区','台江区下杭路','老商贸码头 · 烟火'],['西禅寺','鼓楼区工业路455号','古寺 · 荔枝林'],['福道金牛山步道','金牛山','森林步道 · 城市夜景'],['鼓山涌泉寺','晋安区鼓山镇','古寺 · 摩崖石刻']],
+'平潭':[['坛南湾','平潭南线','海滩 · 日落'],['猴研岛68海里','澳前镇','海峡海景 · 礁石'],['将军山','敖东镇','南线制高点'],['北港文创村','苏澳镇','石头厝 · 渔村'],['镜沙黑沙滩','北线','黑沙滩 · 小冰岛'],['长江澳风车沙滩','北线','风车 · 日落'],['猫头墘渔村','苏澳镇','原生态石头厝'],['和平村S弯','平原镇','风车公路']],
+'泉州':[['开元寺 + 西街','鲤城区西街','世遗 · 东西塔'],['蟳埔村','丰泽区蟳埔社区','簪花围 · 渔村'],['洛阳桥','洛江区万安街道','千年跨海石桥'],['安平桥','晋江市安海镇','古桥 · 海风'],['清净寺','鲤城区涂门街','伊斯兰古寺'],['承天禅寺','鲤城区','古寺 · 清幽'],['崇武古城','惠安县崇武镇','石头海防城']],
+'厦门':[['鼓浪屿','三丘田码头','老别墅 · 海岛'],['沙坡尾','思明区','艺术西区 · 老渔港'],['演武大桥','思明区','海上日落'],['集美学村','集美区','嘉庚建筑 · 海景'],['五缘湾湿地','湖里区','湿地 · 黑天鹅'],['华新路','思明区','南洋老别墅'],['南普陀寺','思明南路','古寺 · 素饼'],['厦门植物园','虎园路','雨林 · 多肉']]
+};
+const foods={
+'福州':[['没牙伯花生汤','老药洲街182号','¥10','花生汤 · 芋泥'],['依土捞化','庆城路39号','¥25','米粉捞化 · 猪肝'],['同利肉燕','澳门路19号','¥28','扁肉燕 · 燕丝面'],['安泰社区食堂','东泰路262号','¥65','荔枝肉 · 南煎肝'],['老福州徐记','鼓西路168号','¥58','醉排骨 · 兴化炒米粉'],['祥坂夜市','祥坂路','¥20–30','冰豆浆 · 油条包虾滑']],
+'平潭':[['谭式煎包','翠园中路','¥15','海鲜煎包 · 海蛎饼'],['捞嘢海肠捞饭','东门庄111号','¥35','海肠捞饭'],['食为福传统老店','翠园新庄33号','¥30','时来运转 · 八珍炒糕'],['战地蚝王烧烤','台亚岚新城','¥60','炭烤生蚝 · 海鲜串'],['十三妹咸米时','西航路','¥32','薯粉小吃 · 海蛎煎'],['毛记潮汕砂锅粥','翠园中路','¥45','螃蟹鲜虾粥']],
+'泉州':[['水门国仔面线糊','水门巷21号','¥20','面线糊 · 醋肉'],['侯阿婆烧肉粽','西街78号','¥23','烧肉粽'],['秉正堂石花膏','天后路10号','¥12','石花膏 · 芋圆'],['忠记盐烧姜母鸭','崇福路91号','¥50','姜母鸭'],['好成财牛排馆','涂门街221号','¥30','牛排 · 牛肉羹'],['亚佛润饼皮','西街','¥15','闽南润饼']],
+'厦门':[['四里沙茶面','湖滨四里14号','¥25','沙茶面 · 醋肉'],['劳松扁食','小学路26号','¥15','扁食汤 · 拌面'],['阿吉仔馅饼','大元路37号','¥20','椰子饼 · 绿豆馅饼'],['浮屿大同鸭肉粥','厦禾路174号','¥20','鸭肉粥 · 油条'],['莲欢海蛎煎','中山路巷子','¥22','海蛎煎'],['小眼镜大排档','槟榔店','¥85','海鲜 · 酱油水海蛎'],['八市阿杰五香','第八市场','¥4','五香卷']]
+};
+let plan='A', city='福州', foodCity='福州';
+function go(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(x=>x.classList.toggle('active',x.dataset.nav===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='trip')renderTimeline();if(id==='spots')renderSpots();if(id==='food')renderFoods()}
+function setPlan(p){plan=p;document.getElementById('planA').classList.toggle('active',p==='A');document.getElementById('planB').classList.toggle('active',p==='B');renderTimeline()}
+function renderTimeline(){let data=plan==='A'?A:B, out='', last='';data.forEach((e,i)=>{if(e[0]!==last){if(last)out+='</div>';last=e[0];out+=`<div class="day"><h3>${e[0]} · ${e[1]}</h3>`}out+=`<div class="event"><div class="time">${e[2]}</div><b>${e[3]}</b><p>${e[4]}</p><div class="actions"><button class="mini" onclick="copyText('${e[3].replaceAll("'","")}')">复制</button><button class="mini" onclick="addSaved('${e[0]}','${e[2]}','${e[3]}','${e[4]}')">＋保存</button></div></div>`});out+='</div>';document.getElementById('timeline').innerHTML=out}
+function renderChips(){document.getElementById('spotChips').innerHTML=Object.keys(spots).map(c=>`<button class="chip ${city===c?'active':''}" onclick="filterCity('${c}')">${c}</button>`).join('');document.getElementById('foodChips').innerHTML=Object.keys(foods).map(c=>`<button class="chip ${foodCity===c?'active':''}" onclick="filterFood('${c}')">${c}</button>`).join('')}
+function renderSpots(){renderChips();document.getElementById('spotList').innerHTML=spots[city].map(s=>`<div class="card city" onclick="openSpot('${s[0]}','${s[1]}','${s[2]}')"><div class="thumb">${s[0]}</div><div class="body"><b>${s[0]}</b><br><small>${s[1]}</small><div class="tags"><span class="tag">${s[2]}</span></div></div></div>`).join('')}
+function renderFoods(){renderChips();document.getElementById('foodList').innerHTML=foods[foodCity].map(f=>`<div class="card place"><div class="thumb">🍜</div><div class="body"><h3>${f[0]}</h3><small>${f[1]} · 人均 ${f[2]}</small><p>必点：${f[3]}</p><div class="actions"><button class="mini" onclick="copyText('${f[1]}')">复制地址</button><button class="mini" onclick="navTo('${f[1]}')">导航</button><button class="mini" onclick="addSaved('${foodCity}','美食','${f[0]}','${f[1]}')">＋行程</button></div></div></div>`).join('')}
+function filterCity(c){city=c;go('spots');renderSpots()}function filterFood(c){foodCity=c;go('food');renderFoods()}
+function openSpot(n,a,d){openSheet('custom',`<h2>${n}</h2><p>${a}</p><p>${d}</p><button class="primary" onclick="addSaved('${city}','景点','${n}','${a}')">＋ 加入我的行程</button>`)}
+function openSheet(type,content){let c=content;if(type==='settings')c='<h2>设置</h2><p>旅伴 V2.1 · 本地优先</p><p>后续：Cloudflare Pages、Worker、Firebase、地图接口。</p>';document.getElementById('sheetContent').innerHTML=c;document.getElementById('modal').classList.add('show')}
+function closeSheet(){document.getElementById('modal').classList.remove('show')}
+function copyText(t){navigator.clipboard?.writeText(t);alert('已复制：'+t)}
+function navTo(q){window.open('https://www.amap.com/search?query='+encodeURIComponent(q),'_blank')}
+function addSaved(date,time,name,note){let s=JSON.parse(localStorage.getItem('tm_events')||'[]');s.push({date,time,name,note});localStorage.setItem('tm_events',JSON.stringify(s));alert('已保存到本机行程');}
+function addEvent(){openSheet('custom',`<h2>添加行程</h2><div class="form"><input id="eDate" placeholder="日期，例如 10月3日"><input id="eTime" placeholder="时间"><input id="eName" placeholder="行程名称"><input id="eNote" placeholder="备注"><button class="primary" onclick="saveCustom()">保存</button></div>`)}
+function saveCustom(){let s=JSON.parse(localStorage.getItem('tm_events')||'[]');s.push({date:eDate.value,time:eTime.value,name:eName.value,note:eNote.value});localStorage.setItem('tm_events',JSON.stringify(s));closeSheet();alert('已保存');}
+async function shareTrip(){let text='旅伴 TravelMate：福建 9.28—10.4｜福州→平潭→泉州→厦门';if(navigator.share)await navigator.share({title:'旅伴行程',text});else copyText(text)}
+function planAI(){let q=document.getElementById('aiInput').value.trim();if(!q){alert('先告诉我你的需求');return}document.getElementById('aiResult').innerHTML='<div class="panel" style="background:#f0f1f3;margin-top:14px"><b>AI 规划示例</b><p>根据你的需求，建议采用“少折返 + 日落优先”的路线：</p><p>① 下午：沙坡尾艺术西区<br>② 傍晚：演武大桥观景平台看海上日落<br>③ 晚上：第八市场吃闽南小吃<br>④ 返回酒店休息</p><button class="primary" onclick="addSaved('自定义','下午','AI推荐路线','沙坡尾 → 演武大桥 → 第八市场')">一键加入行程</button></div>'}
+function clearLocal(){if(confirm('确定清除本设备的旅伴数据吗？')){localStorage.removeItem('tm_events');alert('已清除')}}
+renderTimeline();renderSpots();renderFoods();
 </script>
-</body></html>
+</body>
+</html>
