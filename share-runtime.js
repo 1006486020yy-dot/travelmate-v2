@@ -1,23 +1,170 @@
 (() => {
-  const STYLE_ID='tm-share-style-v2';
-  function installStyle(){if(document.getElementById(STYLE_ID))return;const s=document.createElement('style');s.id=STYLE_ID;s.textContent=`#plans .plan{position:relative}.tm-share-btn{position:absolute!important;left:14px!important;top:14px!important;margin:0!important;width:auto!important;padding:8px 12px!important;border:0!important;border-radius:13px!important;background:#ffffffd9!important;color:#654bc4!important;font-weight:800!important;cursor:pointer!important;z-index:3!important;box-shadow:0 4px 12px #17212b12}.tm-share-backdrop{position:fixed;inset:0;background:#17212b66;z-index:9999;display:none;align-items:flex-end}.tm-share-backdrop.show{display:flex}.tm-share-sheet{width:100%;max-height:82vh;overflow:auto;background:#f7f8fb;border-radius:28px 28px 0 0;padding:20px;box-shadow:0 -20px 60px #17212b22}.tm-share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tm-share-row button{padding:11px 14px;border:0;border-radius:14px;background:#eee9ff;color:#654bc4;font-weight:800;cursor:pointer}.tm-share-row .primary{background:linear-gradient(135deg,#7659d9,#9a7de7);color:#fff}.tm-share-url{width:100%;padding:12px;border:1px solid #e0e5ea;border-radius:14px;background:#fff;word-break:break-all;font-size:12px;color:#65717e}.tm-share-note{font-size:12px;color:#7b8794;line-height:1.6;margin-top:8px}`;document.head.appendChild(s)}
-  function safeSnapshot(){const data={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);try{data[k]=localStorage.getItem(k)}catch(e){}}return data}
-  function encode(obj){const json=JSON.stringify(obj);const bytes=new TextEncoder().encode(json);let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
-  function decode(str){try{str=str.replace(/-/g,'+').replace(/_/g,'/');while(str.length%4)str+='=';const bin=atob(str);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}catch(e){return null}}
-  function restoreShared(){const m=location.hash.match(/^#tm-share=(.+)$/);if(!m)return;const p=decode(m[1]);if(!p||!p.storage)return;try{Object.entries(p.storage).forEach(([k,v])=>localStorage.setItem(k,v));localStorage.setItem('tm_shared_plan_title',p.planTitle||'');localStorage.setItem('tm_shared_plan_index',String(p.planIndex??0));}catch(e){}setTimeout(()=>{try{const b=document.querySelector('[data-n="trip"]');if(b)b.click();else if(typeof window.go==='function')window.go('trip')}catch(e){}},350)}
-  function showShare(planEl,index){installStyle();let box=document.getElementById('tmShareBox');if(!box){box=document.createElement('div');box.id='tmShareBox';box.className='tm-share-backdrop';box.innerHTML='<div class="tm-share-sheet"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:20px">分享行程</b><button id="tmShareClose" style="border:0;background:#fff;border-radius:12px;padding:9px 12px;cursor:pointer">关闭</button></div><p id="tmShareTitle" style="font-weight:800;margin:14px 0 8px"></p><div id="tmShareUrl" class="tm-share-url"></div><div class="tm-share-row"><button id="tmShareCopy" class="primary">复制分享链接</button><button id="tmShareNative">系统分享</button></div><div class="tm-share-note">朋友打开这个链接后，会进入同一份行程数据，并自动打开这份大行程。当前版本采用无服务器链接分享。</div></div>';document.body.appendChild(box);box.addEventListener('click',e=>{if(e.target===box||e.target.id==='tmShareClose')box.classList.remove('show')});}
+  const STYLE_ID='tm-share-style-v3';
+  function installStyle(){
+    if(document.getElementById(STYLE_ID))return;
+    const s=document.createElement('style');
+    s.id=STYLE_ID;
+    s.textContent=`
+      #plans .plan{position:relative!important;overflow:visible!important}
+      #plans .tm-share-btn{
+        position:absolute!important;
+        left:14px!important;
+        top:14px!important;
+        z-index:20!important;
+        display:inline-flex!important;
+        align-items:center!important;
+        justify-content:center!important;
+        width:auto!important;
+        min-width:76px!important;
+        height:36px!important;
+        margin:0!important;
+        padding:7px 12px!important;
+        border:0!important;
+        border-radius:13px!important;
+        background:#ffffff!important;
+        color:#654bc4!important;
+        font:inherit!important;
+        font-size:14px!important;
+        font-weight:800!important;
+        line-height:1!important;
+        cursor:pointer!important;
+        box-shadow:0 4px 14px #17212b18!important;
+        pointer-events:auto!important;
+      }
+      #plans .tm-share-btn:hover{transform:translateY(-1px)!important}
+      .tm-share-backdrop{position:fixed;inset:0;background:#17212b66;z-index:9999;display:none;align-items:flex-end}
+      .tm-share-backdrop.show{display:flex}
+      .tm-share-sheet{width:100%;max-height:82vh;overflow:auto;background:#f7f8fb;border-radius:28px 28px 0 0;padding:20px;box-shadow:0 -20px 60px #17212b22}
+      .tm-share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+      .tm-share-row button{padding:11px 14px;border:0;border-radius:14px;background:#eee9ff;color:#654bc4;font-weight:800;cursor:pointer}
+      .tm-share-row .primary{background:linear-gradient(135deg,#7659d9,#9a7de7);color:#fff}
+      .tm-share-url{width:100%;padding:12px;border:1px solid #e0e5ea;border-radius:14px;background:#fff;word-break:break-all;font-size:12px;color:#65717e}
+      .tm-share-note{font-size:12px;color:#7b8794;line-height:1.6;margin-top:8px}
+    `;
+    document.head.appendChild(s)
+  }
+  function safeSnapshot(){
+    const data={};
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      try{data[k]=localStorage.getItem(k)}catch(e){}
+    }
+    return data
+  }
+  function encode(obj){
+    const json=JSON.stringify(obj);
+    const bytes=new TextEncoder().encode(json);
+    let bin='';
+    bytes.forEach(b=>bin+=String.fromCharCode(b));
+    return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')
+  }
+  function decode(str){
+    try{
+      str=str.replace(/-/g,'+').replace(/_/g,'/');
+      while(str.length%4)str+='=';
+      const bin=atob(str);
+      const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+      return JSON.parse(new TextDecoder().decode(bytes))
+    }catch(e){return null}
+  }
+  function restoreShared(){
+    const m=location.hash.match(/^#tm-share=(.+)$/);
+    if(!m)return;
+    const p=decode(m[1]);
+    if(!p||!p.storage)return;
+    try{
+      Object.entries(p.storage).forEach(([k,v])=>localStorage.setItem(k,v));
+      localStorage.setItem('tm_shared_plan_title',p.planTitle||'');
+      localStorage.setItem('tm_shared_plan_index',String(p.planIndex??0));
+    }catch(e){}
+    setTimeout(()=>{
+      try{
+        const b=document.querySelector('[data-n="trip"]');
+        if(b)b.click();
+        else if(typeof window.go==='function')window.go('trip')
+      }catch(e){}
+    },350)
+  }
+  function showShare(planEl,index){
+    installStyle();
+    let box=document.getElementById('tmShareBox');
+    if(!box){
+      box=document.createElement('div');
+      box.id='tmShareBox';
+      box.className='tm-share-backdrop';
+      box.innerHTML='<div class="tm-share-sheet"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:20px">分享行程</b><button id="tmShareClose" style="border:0;background:#fff;border-radius:12px;padding:9px 12px;cursor:pointer">关闭</button></div><p id="tmShareTitle" style="font-weight:800;margin:14px 0 8px"></p><div id="tmShareUrl" class="tm-share-url"></div><div class="tm-share-row"><button id="tmShareCopy" class="primary">复制分享链接</button><button id="tmShareNative">系统分享</button></div><div class="tm-share-note">朋友打开这个链接后，会进入同一份行程数据，并自动打开这份大行程。当前版本采用无服务器链接分享。</div></div>';
+      document.body.appendChild(box);
+      box.addEventListener('click',e=>{
+        if(e.target===box||e.target.id==='tmShareClose')box.classList.remove('show')
+      })
+    }
     const title=planEl.querySelector('b')?.textContent?.trim()||planEl.textContent.trim().split('\n')[0]||'我的行程';
     const payload={v:1,planTitle:title,planIndex:index,storage:safeSnapshot()};
     const url=location.origin+location.pathname+'#tm-share='+encode(payload);
     box.querySelector('#tmShareTitle').textContent=title;
     box.querySelector('#tmShareUrl').textContent=url;
-    box.querySelector('#tmShareCopy').onclick=async()=>{try{await navigator.clipboard.writeText(url);toast('分享链接已复制')}catch(e){const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('分享链接已复制')}};
-    box.querySelector('#tmShareNative').onclick=async()=>{if(navigator.share){try{await navigator.share({title:'旅伴旅行管家 · '+title,text:'查看我的旅行行程',url})}catch(e){}}else{try{await navigator.clipboard.writeText(url);toast('当前设备不支持系统分享，已复制链接')}catch(e){}}};
+    box.querySelector('#tmShareCopy').onclick=async()=>{
+      try{
+        await navigator.clipboard.writeText(url);
+        toast('分享链接已复制')
+      }catch(e){
+        const ta=document.createElement('textarea');
+        ta.value=url;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+        toast('分享链接已复制')
+      }
+    };
+    box.querySelector('#tmShareNative').onclick=async()=>{
+      if(navigator.share){
+        try{await navigator.share({title:'旅伴旅行管家 · '+title,text:'查看我的旅行行程',url})}catch(e){}
+      }else{
+        try{await navigator.clipboard.writeText(url);toast('当前设备不支持系统分享，已复制链接')}catch(e){}
+      }
+    };
     box.classList.add('show');
   }
-  function toast(t){let x=document.getElementById('tmShareToast');if(!x){x=document.createElement('div');x.id='tmShareToast';x.style.cssText='position:fixed;left:50%;bottom:95px;transform:translateX(-50%);z-index:10000;background:#202733;color:#fff;padding:10px 15px;border-radius:14px;font-size:13px';document.body.appendChild(x)}x.textContent=t;x.style.display='block';clearTimeout(x._t);x._t=setTimeout(()=>x.style.display='none',1800)}
-  function enhance(){installStyle();document.querySelectorAll('#plans .plan').forEach((p,i)=>{if(p.querySelector('.tm-share-btn'))return;const b=document.createElement('button');b.className='tm-share-btn';b.textContent='↗ 分享';b.onclick=e=>{e.stopPropagation();showShare(p,i)};p.appendChild(b)})}
+  function toast(t){
+    let x=document.getElementById('tmShareToast');
+    if(!x){
+      x=document.createElement('div');
+      x.id='tmShareToast';
+      x.style.cssText='position:fixed;left:50%;bottom:95px;transform:translateX(-50%);z-index:10000;background:#202733;color:#fff;padding:10px 15px;border-radius:14px;font-size:13px';
+      document.body.appendChild(x)
+    }
+    x.textContent=t;
+    x.style.display='block';
+    clearTimeout(x._t);
+    x._t=setTimeout(()=>x.style.display='none',1800)
+  }
+  function enhance(){
+    installStyle();
+    document.querySelectorAll('#plans .plan').forEach((p,i)=>{
+      if(p.querySelector('.tm-share-btn'))return;
+      // plan 本身是 <button>，这里必须使用 span，不能再嵌套 button，否则浏览器会破坏 DOM。
+      const b=document.createElement('span');
+      b.className='tm-share-btn';
+      b.textContent='↗ 分享';
+      b.setAttribute('role','button');
+      b.setAttribute('tabindex','0');
+      const open=e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        showShare(p,i)
+      };
+      b.addEventListener('click',open);
+      b.addEventListener('keydown',e=>{
+        if(e.key==='Enter'||e.key===' '){open(e)}
+      });
+      p.appendChild(b)
+    })
+  }
   restoreShared();
-  const obs=new MutationObserver(()=>enhance());obs.observe(document.documentElement,{childList:true,subtree:true});
-  setTimeout(enhance,100);setTimeout(enhance,600);setTimeout(enhance,1500);
+  const obs=new MutationObserver(()=>enhance());
+  obs.observe(document.documentElement,{childList:true,subtree:true});
+  setTimeout(enhance,100);
+  setTimeout(enhance,600);
+  setTimeout(enhance,1500);
 })();
